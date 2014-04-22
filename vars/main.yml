@@ -1,0 +1,18 @@
+supervisor:
+    config:
+        file: /etc/supervisord.conf
+        dir: /etc/supervisord.d
+    log:
+        dir: /var/log/supervisord
+    status:
+      file: status.ini
+      port: 127.0.0.1:9001
+      username: user
+      password: 123
+
+    programs:
+      - file: web.ini
+        name: nginx
+        values:
+          - command=/usr/sbin/nginx
+          - autostart=true
