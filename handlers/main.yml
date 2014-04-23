@@ -1,0 +1,16 @@
+---
+- name: run supervisord
+  shell: /usr/bin/supervisord -c {{supervisord.config.file}} creates="{{supervisord.runtime.dir}}/{{supervisord.runtime.socket}}"
+
+- name: reread supervisord config
+  shell: /usr/bin/supervisorctl reread
+
+- name: add programs to process group
+  shell: supervisorctl add {{item.name}}
+  when: supervisor.programs is defined
+  with_items: supervisor.programs
+
+- name: change supervisord programs states
+  shell: supervisorctl start {{item.name}}
+  when: supervisor.programs is defined
+  with_items: supervisor.programs
