@@ -13,39 +13,62 @@ roles:
 ```
 
 ## Synopsis
-Supervisor will be installed using python's `easy_install` that is included in the setup tools.
+Supervisor will be installed using python's `easy_install`
+that is included in the setup tools.
 
-## Vars
-The following configuration is required:
+## Usage
 
 > programs values should not have spaces b/w `=`
 
+### Programs
+
 ```yaml
 vars:
-  supervisor:
-      config:
-          file: /etc/supervisord.conf
-          dir: /etc/supervisord.d
-      log:
-          dir: /var/log/supervisord
-      status:
-        file: status.ini
-        port: 127.0.0.1:9001
-        username: user
-        password: 123
 
-      programs: # define your programs here, i.e:
-        - file: web.ini
-          name: nginx
-          values:
-            - command=/usr/sbin/nginx
-        - file: web.ini
-          name: php-fpm
-          values:
-            - command=/usr/bin/php-fpm
-            - autostart=true
-        - file: db.ini
-          name: redis
-          values:
-            - command=/usr/init.d/redis start
+  supervisor:
+    programs:
+      - file: web.ini
+        name: nginx
+        values:
+          - command=/usr/sbin/nginx
+      - file: web.ini
+        name: php-fpm
+        values:
+          - command=/usr/bin/php-fpm
+          - autostart=true
+      - file: db.ini
+        name: redis
+        values:
+          - command=/usr/init.d/redis start
+```
+
+### Optional Configuration
+You may override any of the default `supervisord` configuration set by adding
+any of the following variables.
+
+> Note: any overridden variable must introduce all of its attributes.
+
+```yaml
+supervisord:
+  runtime:
+    dir: /var/run/supervisor
+    nodaemon: "false"
+    socket: supervisord.sock
+    pidfile: supervisord.pid
+
+  config:
+    dir: /etc/supervisord.d
+    file: /etc/supervisord.conf
+    default: /etc/default.supervisord.conf
+
+  log:
+    dir: /var/log/supervisord
+    file: supervisord.log
+    level: info
+
+  http:
+    file: status.ini
+    port: 127.0.0.1:9002
+    username: user
+    password: 123
 ```
