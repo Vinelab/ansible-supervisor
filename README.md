@@ -30,17 +30,25 @@ vars:
       - file: web.ini
         name: nginx
         values:
-          - command=/usr/sbin/nginx
+          - command: /usr/sbin/nginx
       - file: web.ini
         name: php-fpm
         values:
-          - command=/usr/bin/php-fpm
-          - autostart=true
+          - command: /usr/bin/php-fpm
+          - autostart: "true"
       - file: db.ini
         name: redis
         values:
-          - command=/usr/init.d/redis start
+          - command: /usr/init.d/redis start
+      - files: queue.ini
+        name: queue-sync
+        values:
+          - directory: /var/www/app
+          - command: /usr/bin/php artisan queue:listen --queue=sync --sleep=20
 ```
+
+you can have anything in the `values` section since the `dict key` will represent the option
+and the value will be the option's value.
 
 ### Optional Configuration
 You may override any of the default `supervisord` configuration set by adding

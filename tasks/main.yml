@@ -57,14 +57,16 @@
 - name: add programs
   ini_file: dest={{supervisord.config.dir}}/{{item.0.file}}
             section="program:{{item.0.name}}"
-            option={{item.1.split('=')[0]}}
-            value={{item.1.split('=')[1]}}
+            option="{{item.1.keys()[0]}}"
+            value="{{item.1.values()[0]}}"
             state=present
   with_subelements:
       - supervisor.programs
       - values
   when: supervisor.programs is defined
-  tags: supervisor
+  tags:
+      - supervisor-programs
+      - supervisor
 
 - name: make sure supervisord is running and up-to-date
   shell: echo Magic...
