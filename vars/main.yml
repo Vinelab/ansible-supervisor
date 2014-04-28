@@ -1,4 +1,4 @@
-supervisord:
+supervisor:
 
   runtime:
     dir: /var/run/supervisor
@@ -18,6 +18,6 @@ supervisord:
 
   http:
     file: status.ini
-    port: 127.0.0.1:9002
+    port: 127.0.0.1:9001
     username: user
     password: 123

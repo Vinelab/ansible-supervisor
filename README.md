@@ -5,6 +5,8 @@ A playbook role to install and configure `supervisord` and `supervisorctl` on Ce
 - Clone this repository inside your `roles` directory as `supervisor`
 or add it as a submodule: `git submodule add git@github.com:Vinelab/ansible-supervisor roles/supervisor`
 
+- In `ansible.cfg` make sure that `hash_behavior = merge` under `[defaults]`
+
 - In your playbook:
 
 ```yaml
@@ -18,7 +20,7 @@ that is included in the setup tools.
 
 ## Usage
 
-> programs values should not have spaces b/w `=`
+> `hash_behavior` must be set to `merge` in your `ansible.cfg` under `[defaults]`
 
 ### Programs
 
@@ -47,17 +49,29 @@ vars:
           - command: /usr/bin/php artisan queue:listen --queue=sync --sleep=20
 ```
 
-you can have anything in the `values` section since the `dict key` will represent the option
-and the value will be the option's value.
+you can have anything in the `values` section since the dictionary `key` will
+represent the `option` and the `value` will be the option's `value`.
+
+### Http Server
+Configuring the http server credentials
+
+> `hash_behavior` must be set to `merge` in your `ansible.cfg` under `[defaults]`
+
+```yaml
+supervisor:
+  http:
+    username: custom_username
+    password: 123passwd
+```
 
 ### Optional Configuration
 You may override any of the default `supervisord` configuration set by adding
 any of the following variables.
 
-> Note: any overridden variable must introduce all of its attributes.
+> `hash_behavior` must be set to `merge` in your `ansible.cfg` under `[defaults]`
 
 ```yaml
-supervisord:
+supervisor:
   runtime:
     dir: /var/run/supervisor
     nodaemon: "false"

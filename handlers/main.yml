@@ -1,6 +1,6 @@
 ---
 - name: run supervisord
-  shell: /usr/bin/supervisord -c {{supervisord.config.file}} creates="{{supervisord.runtime.dir}}/{{supervisord.runtime.socket}}"
+  shell: /usr/bin/supervisord -c {{supervisor.config.file}} creates="{{supervisor.runtime.dir}}/{{supervisor.runtime.socket}}"
 
 - name: reread supervisord config
   shell: /usr/bin/supervisorctl reread
