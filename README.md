@@ -2,6 +2,12 @@
 A playbook role to install and configure `supervisord` and `supervisorctl` on Centos/Red Hat/Fedora with Ansible
 
 ## Installation
+
+### Dependencies
+
+- `git submodule add git@github.com:Vinelab/ansible-epel-repo roles/epel-repo`
+
+### Install
 - Clone this repository inside your `roles` directory as `supervisor`
 or add it as a submodule: `git submodule add git@github.com:Vinelab/ansible-supervisor roles/supervisor`
 
